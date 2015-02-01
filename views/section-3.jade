@@ -18,37 +18,40 @@ html(xmlns='http://www.w3.org/1999/xhtml')
           li#li_1
             label.description(for='element_1') Section-Title 
             div
-              input#element_1.element.text.medium(name='element_1', type='text', maxlength='255', value='')
+              textarea#section-title.element.textarea.small(name='element_1')
             p#guide_1.guidelines
               small Main title
           li#li_2
             label.description(for='element_2') Section-Title-Tag-Lines 
             div
-              textarea#element_2.element.textarea.medium(name='element_2')
+              textarea#section-title-tag-line.element.textarea.small(name='element_2')
           li#li_3
             label.description(for='element_3') Section-Header 
             div
-              textarea#element_3.element.textarea.large(name='element_3')
+              textarea#section-header.element.textarea.small(name='element_3')
           li#li_4
             label.description(for='element_4') Section-First-Sub-Title 
             div
-              input#element_4.element.text.medium(name='element_4', type='text', maxlength='255', value='')
+              textarea#section-first-sub-title.element.textarea.small(name='element_4')
           li#li_5
             label.description(for='element_5') Section-First-Sub-Content 
             div
-              textarea#element_5.element.textarea.large(name='element_5')
+              textarea#section-first-sub-content.element.textarea.large(name='element_5')
           li#li_6
             label.description(for='element_6') Section-Second-Sub-Title 
             div
-              input#element_6.element.text.medium(name='element_6', type='text', maxlength='255', value='')
+              textarea#section-second-sub-title.element.textarea.small(name='element_6')
           li#li_7
             label.description(for='element_7') Section-Second-Sub-Content 
             div
-              textarea#element_7.element.textarea.large(name='element_7')
+              textarea#section-second-sub-content.element.textarea.large(name='element_7')
           li.buttons
             input(type='hidden', name='form_id', value='953947')
-            input#saveForm.button_text(type='submit', name='submit', value='Submit')
+            input#saveFormSection3.button_text(type='submit', name='submit', value='Submit')
+            input#preview.button_text(type='submit', name='submit', value='Preview')
       #footer
         | Powered by 
-        a(href='http://www.phpform.org') Ankit Designs
+        a(href='http://ankitdesigns.com') Ankit Designs
     img#bottom(src='/images/form_images/bottom.png', alt='')
+    script(src='http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js')
+    script(type='text/javascript', src='/javascripts/update.js')

@@ -14,6 +14,7 @@ var routes = require('./routes/index');
 var cms = require('./routes/cms');
 
 
+
 var app = express();
 
 // view engine setup
@@ -32,6 +33,7 @@ app.use(function(req,res,next){
 });
 app.use('/', routes);
 app.use('/cms', cms);
+
 
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -64,5 +66,9 @@ app.use(function(err, req, res, next) {
     });
 });
 
+
+app.post('/test',function(req,res) {
+    res.send("Hello world");
+})
 
 module.exports = app;

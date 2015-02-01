@@ -1,26 +1,92 @@
 0 info it worked if it ends with ok
-1 verbose cli [ 'node', '/usr/local/bin/npm', 'start' ]
-2 info using npm@1.4.21
-3 info using node@v0.10.30
-4 verbose run-script [ 'prestart', 'start', 'poststart' ]
-5 info prestart truck_template@0.0.1
-6 info start truck_template@0.0.1
-7 verbose unsafe-perm in lifecycle true
-8 info truck_template@0.0.1 Failed to exec start script
-9 error truck_template@0.0.1 start: `node ./bin/www`
-9 error Exit status 8
-10 error Failed at the truck_template@0.0.1 start script.
-10 error This is most likely a problem with the truck_template package,
-10 error not with npm itself.
-10 error Tell the author that this fails on your system:
-10 error     node ./bin/www
-10 error You can get their info via:
-10 error     npm owner ls truck_template
-10 error There is likely additional logging output above.
-11 error System Darwin 14.0.0
-12 error command "node" "/usr/local/bin/npm" "start"
-13 error cwd /Users/shiva_komatreddy/Desktop/Projects/truck_template
-14 error node -v v0.10.30
-15 error npm -v 1.4.21
-16 error code ELIFECYCLE
-17 verbose exit [ 1, true ]
+1 verbose cli [ 'C:\\Program Files (x86)\\nodejs\\\\node.exe',
+1 verbose cli   'C:\\Program Files (x86)\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'install' ]
+2 info using npm@1.4.28
+3 info using node@v0.10.35
+4 verbose node symlink C:\Program Files (x86)\nodejs\\node.exe
+5 verbose readDependencies using package.json deps
+6 verbose install where, deps [ 'C:\\Users\\SHiVA\\Desktop\\Projects\\truck_template',
+6 verbose install   [ 'express',
+6 verbose install     'static-favicon',
+6 verbose install     'morgan',
+6 verbose install     'cookie-parser',
+6 verbose install     'body-parser',
+6 verbose install     'debug',
+6 verbose install     'jade',
+6 verbose install     'mongodb',
+6 verbose install     'mongoskin' ] ]
+7 info preinstall truck_template@0.0.1
+8 verbose readDependencies using package.json deps
+9 verbose already installed skipping express@~4.2.0 C:\Users\SHiVA\Desktop\Projects\truck_template
+10 verbose already installed skipping static-favicon@~1.0.0 C:\Users\SHiVA\Desktop\Projects\truck_template
+11 verbose already installed skipping morgan@~1.0.0 C:\Users\SHiVA\Desktop\Projects\truck_template
+12 verbose already installed skipping cookie-parser@~1.0.1 C:\Users\SHiVA\Desktop\Projects\truck_template
+13 verbose already installed skipping body-parser@~1.0.0 C:\Users\SHiVA\Desktop\Projects\truck_template
+14 verbose already installed skipping debug@~0.7.4 C:\Users\SHiVA\Desktop\Projects\truck_template
+15 verbose already installed skipping jade@~1.3.0 C:\Users\SHiVA\Desktop\Projects\truck_template
+16 verbose already installed skipping mongodb@* C:\Users\SHiVA\Desktop\Projects\truck_template
+17 verbose already installed skipping mongoskin@* C:\Users\SHiVA\Desktop\Projects\truck_template
+18 silly resolved []
+19 info build C:\Users\SHiVA\Desktop\Projects\truck_template
+20 verbose linkStuff [ false, false, false, 'C:\\Users\\SHiVA\\Desktop\\Projects' ]
+21 info linkStuff truck_template@0.0.1
+22 verbose linkBins truck_template@0.0.1
+23 verbose linkMans truck_template@0.0.1
+24 verbose rebuildBundles truck_template@0.0.1
+25 verbose rebuildBundles [ '.DS_Store',
+25 verbose rebuildBundles   '._.DS_Store',
+25 verbose rebuildBundles   '.bin',
+25 verbose rebuildBundles   'body-parser',
+25 verbose rebuildBundles   'cookie-parser',
+25 verbose rebuildBundles   'debug',
+25 verbose rebuildBundles   'express',
+25 verbose rebuildBundles   'jade',
+25 verbose rebuildBundles   'mongodb',
+25 verbose rebuildBundles   'mongoskin',
+25 verbose rebuildBundles   'monk',
+25 verbose rebuildBundles   'morgan',
+25 verbose rebuildBundles   'nodemon',
+25 verbose rebuildBundles   'static-favicon' ]
+26 verbose rebuild bundle C:\Users\SHiVA\Desktop\Projects\truck_template\node_modules\monk
+27 info build C:\Users\SHiVA\Desktop\Projects\truck_template\node_modules\monk
+28 info preinstall monk@0.9.0
+29 verbose linkStuff [ false,
+29 verbose linkStuff   false,
+29 verbose linkStuff   false,
+29 verbose linkStuff   'C:\\Users\\SHiVA\\Desktop\\Projects\\truck_template\\node_modules' ]
+30 info linkStuff monk@0.9.0
+31 verbose linkBins monk@0.9.0
+32 verbose linkMans monk@0.9.0
+33 verbose rebuildBundles monk@0.9.0
+34 verbose rebuildBundles [ 'mongoskin', 'mpromise' ]
+35 info install monk@0.9.0
+36 info postinstall monk@0.9.0
+37 verbose rebuild bundle C:\Users\SHiVA\Desktop\Projects\truck_template\node_modules\nodemon
+38 info build C:\Users\SHiVA\Desktop\Projects\truck_template\node_modules\nodemon
+39 info preinstall nodemon@1.3.6
+40 verbose linkStuff [ false,
+40 verbose linkStuff   false,
+40 verbose linkStuff   false,
+40 verbose linkStuff   'C:\\Users\\SHiVA\\Desktop\\Projects\\truck_template\\node_modules' ]
+41 info linkStuff nodemon@1.3.6
+42 warn prefer global nodemon@1.3.6 should be installed with -g
+43 verbose linkBins nodemon@1.3.6
+44 verbose link bins [ { nodemon: './bin/nodemon.js' },
+44 verbose link bins   'C:\\Users\\SHiVA\\Desktop\\Projects\\truck_template\\node_modules\\.bin',
+44 verbose link bins   false ]
+45 verbose linkMans nodemon@1.3.6
+46 verbose rebuildBundles nodemon@1.3.6
+47 error Error: ENOENT, chmod 'C:\Users\SHiVA\Desktop\Projects\truck_template\node_modules\nodemon\bin\nodemon.js'
+48 error If you need help, you may report this *entire* log,
+48 error including the npm and node versions, at:
+48 error     <http://github.com/npm/npm/issues>
+49 error System Windows_NT 6.1.7600
+50 error command "C:\\Program Files (x86)\\nodejs\\\\node.exe" "C:\\Program Files (x86)\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "install"
+51 error cwd C:\Users\SHiVA\Desktop\Projects\truck_template
+52 error node -v v0.10.35
+53 error npm -v 1.4.28
+54 error path C:\Users\SHiVA\Desktop\Projects\truck_template\node_modules\nodemon\bin\nodemon.js
+55 error code ENOENT
+56 error errno 34
+57 verbose exit [ 34, true ]
