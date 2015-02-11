@@ -1,8 +1,9 @@
-$( document ).ready(function() {
+$( document ).ready(function() {	
 	populateContentSlider();
 	populateContentSection3();
 	populateContentSection4();
 	populateContentSection6();
+	populateContactUsSection();
 });
 
 function populateContentSlider(){
@@ -11,7 +12,7 @@ function populateContentSlider(){
 	var content = "First Slide Testing";
 
 	var sliderContent ="<div id='headline_cycler'>";
-	sliderContent+="<ul class='flexslider'>";	
+	sliderContent+="<ul class='flexslider'>";
 	sliderContent+="<li class='slide first'>";
 	sliderContent+="<h2>"+content+"</h2>";
 	sliderContent+="<p>First-Tag-Line</p>";
@@ -33,9 +34,7 @@ function populateContentSlider(){
 	$('#section-1-slider').html(sliderContent);
 }
 
-
-function populateContentSection3(){
-
+function populateContentSection3() {	
 	var getUrl = '/cms/get/section3';
 	$.getJSON(getUrl, function (data){
 
@@ -56,7 +55,6 @@ function populateContentSection3(){
 		$('#section-3').find('#section3-sub-content-2').html(sub_content_2);
 
 	});
-
 }
 
 function populateContentSection4 () {
@@ -92,14 +90,11 @@ function populateContentSection4 () {
 		var section4Content = sectionTitle + teamMembers;
 		$('#section-4').html(section4Content);
 	});
-
 }
 
-function populateContentSection6(){	
-
+function populateContentSection6() {
 	var getUrl = '/cms/get/section6';
 	$.getJSON(getUrl, function (data){
-
 		var section6Content = "<div class='col1-1'><h3>"+ data[0].title+"</h3><div class='roman-number'>";
 		section6Content+="<div class='lines'></div><span>iv</span></div></div>";
 		section6Content+="<div class='col1-1'><p class='sub-heading'>"+data[0].title_tag_line+"</p></div>";
@@ -110,7 +105,30 @@ function populateContentSection6(){
 		section6Content+="<p>"+data[0].fourth_paragraph+"</p></div>";
 		$('#section-6').html(section6Content);
 	});
-
 	console.log('Section-6-ready');
+}
+
+function populateContactUsSection(){
+	var getUrl = '/cms/get/contactUs';
+	$.getJSON(getUrl, function (data){
+		$('#where-section').html(data[0].where);
+
+		var contactSectionContent="Email : ";
+		contactSectionContent+="<a class='email_link' title='Email' href='mailto:"+data[0].email+"'>";
+		contactSectionContent+=data[0].email;
+		contactSectionContent+="</a><br>";
+		contactSectionContent+="Phone : "+data[0].phone+"<br>";
+		contactSectionContent+="Fax : "+data[0].fax+"</p>";
+
+		$('#contact-info-section').html(contactSectionContent);		
+		
+	});
+}
+
+function populateFooterSection(){
+	var getUrl = '/cms/get/footer';
+	$.getJSON(getUrl, function (data){
+		//var content=
+	});
 }
 

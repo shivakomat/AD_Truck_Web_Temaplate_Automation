@@ -6,7 +6,6 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 //var mongo = require('mongodb');
-//var db = mongo.db(mongodb://shiva:Montreal123@ds039431.mongolab.com:39431/heroku_app33336953);
 var mongo = require('mongoskin');
 var db = mongo.db('mongodb://localhost:27017/site_data',{native_parser:true});
 

@@ -1,5 +1,29 @@
 var express = require('express');
 var cms = express.Router();
+var multer  = require('multer');
+var done = false;
+
+cms.use(multer({ 
+	dest: 'C:/Users/SHiVA/Desktop/Projects/truck_template/public/images/',
+	rename: function (fieldname, filename) {
+	    return "jot_logo";
+	},
+	onFileUploadStart: function (file) {
+	  console.log(file.originalname + ' is starting ...')
+	},
+	onFileUploadComplete: function (file) {	 
+	  console.log(file.fieldname + ' uploaded to  ' + file.path)
+	  done=true;
+	}
+}));
+
+
+cms.post('/upload/photo',function(req,res){
+  if(done==true){
+    console.log(req.files);
+    res.end("File uploaded.");
+  }
+})
 
 
 cms.get('/get/section1',function(req,res) {
@@ -83,6 +107,28 @@ cms.get('/set/section6/default',function(req,res){
 		}
 		res.send(err);
 	});	
+});
+
+cms.get('/get/contactUs',function(req,res) {
+	var db = req.db;
+	db.collection('contactUs').find().toArray(function (err,content){
+    	res.json(content);
+    });
+});
+
+cms.put('/set/contactUs',function(req,res){
+	var db = req.db;
+	var content = req.body;	
+	db.collection('contactUs').update({key:"content"}, {$set:content},function(err,result) {
+		res.send((result === 1) ? { msg: '' } : { msg: 'error:' + err });
+	});	
+});
+
+cms.get('/get/footer',function(req,res) {
+	var db = req.db;
+	db.collection('footer').find().toArray(function (err,content){
+    	res.json(content);
+    });
 });
 
 module.exports = cms;

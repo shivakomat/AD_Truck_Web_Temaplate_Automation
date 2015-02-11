@@ -2,9 +2,13 @@ $( document ).ready(function() {
 	populateSection1();
 	populateSection3();
 	populateSection6();
+	populateFooter();
+	populateContactUs();
 	$('#saveFormSection1').on('click', updateSection1Content);		
 	$('#saveFormSection3').on('click', updateSection3Content);	
 	$('#saveFormSection6').on('click', updateSection6Content);
+	$('#saveFormContactUs').on('click', updateContactUsContent);
+	
 });
 
 function populateSection1(){
@@ -89,5 +93,42 @@ function updateSection6Content (event) {
 				alert("scuccessfully updated !!");
 			}
 			else { alert('Error: ' + response.msg); }
+	});
+}
+
+function populateContactUs(){
+	var getUrl = '/cms/get/contactUs';
+	$.getJSON(getUrl, function (data){		
+		$('#where').text(data[0].where);		
+		$('#email').val(data[0].email);
+		$('#phone').val(data[0].phone);
+		$('#fax').val(data[0].fax);
+	});
+}
+
+function updateContactUsContent (event) {	
+	event.preventDefault();
+	var content = {
+		where: $('#where').val(),
+		email: $('#email').val(),
+		phone: $('#phone').val(),
+		fax: $('#fax').val()				
+	}
+	console.log(JSON.stringify(content));
+
+	$.ajax({type: 'PUT',data: content,url: '/cms/set/contactUs',dataType: 'JSON'}).done(function( response ){
+			if (response.msg === ''){ 
+				populateContactUs();
+				alert("scuccessfully updated !!");
+			}
+			else { alert('Error: ' + response.msg); }
+	});
+}
+
+function populateFooter(){
+	var getUrl = '/cms/get/footer';
+	$.getJSON(getUrl, function (data){		
+		$('#company-name').val(data[0].company_name);
+				
 	});
 }

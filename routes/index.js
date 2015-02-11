@@ -6,6 +6,10 @@ router.get('/', function(req, res) {
   res.render('main');
 });
 
+router.get('/build/header', function(req, res) {
+  res.render('header');
+});
+
 router.get('/build/section1', function(req, res) {
   res.render('section-1');
 });
@@ -18,5 +22,12 @@ router.get('/build/section6', function(req, res) {
   res.render('section-6');
 });
 
+router.get('/build/contactUs', function(req, res) {
+  res.render('contactUs');
+});
+
+router.get('/build/footer', function(req, res) {
+  res.render('footer');
+});
 
 module.exports = router;
