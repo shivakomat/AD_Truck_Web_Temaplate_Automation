@@ -4,6 +4,7 @@ $( document ).ready(function() {
 	populateContentSection4();
 	populateContentSection6();
 	populateContactUsSection();
+	populateFooterSection();
 });
 
 function populateContentSlider(){
@@ -128,7 +129,21 @@ function populateContactUsSection(){
 function populateFooterSection(){
 	var getUrl = '/cms/get/footer';
 	$.getJSON(getUrl, function (data){
-		//var content=
+		// console.log(data[0].company_name);
+		// console.log(data[0].trademark);
+		var currentYear = (new Date()).getFullYear();	
+		var content="<p>";
+		content+="<span id='copyright-section' class='alignleft small'>";
+		content+="Copyright © ";
+		content+=currentYear+" ";	
+		content+=data[0].company_name+". All rights reserved. ";
+		if(data[0].trademark == 1){
+			content+="Designed & Developed by <a href='http://www.ankitdesigns.com'>Ankit Designs</a>.";
+		}
+		content+="</span>";
+		content+="<span class='alignright small'>Visit Our </span></p>";
+        $('#footer-section').html(content);
+
 	});
 }
 

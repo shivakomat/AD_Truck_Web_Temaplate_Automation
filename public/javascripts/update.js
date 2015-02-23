@@ -1,6 +1,7 @@
 $( document ).ready(function() {
 	populateSection1();
 	populateSection3();
+	populateSection4();
 	populateSection6();
 	populateFooter();
 	populateContactUs();
@@ -8,6 +9,7 @@ $( document ).ready(function() {
 	$('#saveFormSection3').on('click', updateSection3Content);	
 	$('#saveFormSection6').on('click', updateSection6Content);
 	$('#saveFormContactUs').on('click', updateContactUsContent);
+	$('#saveFormFooter').on('click', updateFooter);
 	
 });
 
@@ -62,6 +64,12 @@ function updateSection3Content (event) {
 			else { alert('Error: ' + response.msg); }
 	});
 }
+
+function populateSection4(){
+	//$('#team-members-form')
+}
+
+
 
 function populateSection6(){
 	var getUrl = '/cms/get/section6';
@@ -129,6 +137,30 @@ function populateFooter(){
 	var getUrl = '/cms/get/footer';
 	$.getJSON(getUrl, function (data){		
 		$('#company-name').val(data[0].company_name);
+		if(data[0].trademark == 1){
+			$('#trademark').attr('checked',true);
+		}
+		else{
+			$('#trademark').attr('checked',false);
+		}
 				
+	});
+}
+
+function updateFooter (event) {	
+	event.preventDefault();
+	var trademarkFeatureStatus;
+	if($('#trademark').is( ":checked" )){ trademarkFeatureStatus = 1; } else{ trademarkFeatureStatus = 0; }
+	var content = {
+		company_name: $('#company-name').val(),
+		trademark:trademarkFeatureStatus				
+	}
+
+	$.ajax({type: 'PUT',data: content,url: '/cms/set/footer',dataType: 'JSON'}).done(function( response ){
+			if (response.msg === ''){ 
+				populateFooter();
+				alert("scuccessfully updated !!");
+			}
+			else { alert('Error: ' + response.msg); }
 	});
 }

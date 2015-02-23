@@ -131,4 +131,12 @@ cms.get('/get/footer',function(req,res) {
     });
 });
 
+cms.put('/set/footer',function(req,res){
+	var db = req.db;
+	var content = req.body;	
+	db.collection('footer').update({key:"content"}, {$set:content},function(err,result) {
+		res.send((result === 1) ? { msg: '' } : { msg: 'error:' + err });
+	});	
+});
+
 module.exports = cms;

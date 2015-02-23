@@ -18,6 +18,10 @@ router.get('/build/section3', function(req, res) {
   res.render('section-3');
 });
 
+router.get('/build/section4', function(req, res) {
+  res.render('section-4');
+});
+
 router.get('/build/section6', function(req, res) {
   res.render('section-6');
 });
