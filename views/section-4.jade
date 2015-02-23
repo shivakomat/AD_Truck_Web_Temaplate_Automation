@@ -15,35 +15,15 @@ html(xmlns='http://www.w3.org/1999/xhtml')
           h2 Edit Team Section
           p Edit Content For Team Section
         ul#team-members-form
-          li#li_1
-            label.description(for='element_1') Team Members 
-            div
-              select#element_1.element.select.small(name='element_1')
-                option(value='', selected='selected')
-                option(value='1') 1
-                option(value='2') 2
-                option(value='3') 3
-                option(value='4') 4
-                option(value='5') 5
-                option(value='6') 6
-                option(value='7') 7
-                option(value='8') 8
-          li#li_2
-            label.description(for='element_2') Memeber Name 
-            div
-              input#element_2.element.text.medium(name='element_2', type='text', maxlength='255', value='')
-            p#guide_2.guidelines
-              small Name of the member
-          li#li_3
-            label.description(for='element_3') Role 
-            div
-              input#element_3.element.text.medium(name='element_3', type='text', maxlength='255', value='')
-            p#guide_3.guidelines
-              small member position in the firm
-          li.buttons
+        li.buttons
             input(type='hidden', name='form_id', value='970290')
-            input#saveForm.button_text(type='submit', name='submit', value='Submit')
+            input#modifyFormSection4.button_text(type='button', name='modify', value='Modify')
+        li.buttons
+            input(type='hidden', name='form_id', value='970290')
+            input#saveFormSection4.button_text(type='submit', name='submit', value='Submit')        
       #footer
         | Powered by 
         a(href='http://ankitdesigns.com') Ankit Designs
     img#bottom(src='/images/form_images/bottom.png', alt='')
+    script(src='http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js')
+    script(type='text/javascript', src='/javascripts/update.js')

@@ -82,8 +82,7 @@ function populateContentSection4 () {
 			teamMember+="<div class='info_panel'>";
 			teamMember+="<h4>"+data[i].member+"</h4>";
 			teamMember+="<p>"+data[i].position+"</p><br>";
-			teamMember+="</div></div>";
-
+			teamMember+="</div></div>";			
 			teamMembers +=teamMember;
 
 		}		

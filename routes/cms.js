@@ -82,6 +82,17 @@ cms.get('/set/section3/default',function(req,res){
 	});	
 });
 
+cms.put('/set/section4',function(req,res){
+	var db = req.db;
+	//var content = [{"member":"Shiva","position":"Manager"},{"member":"Aynka","position":"Employee"}];	
+	var content = req.body;	
+	console.log(content);
+	res.send({ msg: '' });	
+	db.collection('section4').insert(content,function(err,result) {
+		res.send((result === 1) ? { msg: '' } : { msg: 'error:' + err });
+	});	
+});
+
 cms.put('/set/section6',function(req,res){
 	var db = req.db;
 	var content = req.body;	
