@@ -68,40 +68,31 @@ function updateSection3Content (event) {
 
 function populateSection4(){	
 	var getUrl = '/cms/get/section4';
+	$('#team-members-form li:not(:first):not(:last)').remove();		
 	$.getJSON(getUrl, function (data){
-		var content="<li id='li_1'>";
-		content+="<label for='element_1' class='description'>Team Members </label>";
-		content+="<div>";
-		content+="<select id='numberOfTeamMembers' name='element_1' class='element select small'>";
-		content+="<option value='0' selected='selected'></option>";
-		var numberOfTeamMembers = 8;		
-		for (var i = 1; i <= numberOfTeamMembers; i++) {
-			content+="<option value='"+i+"'>"+i+"</option>";		
-		}
-		content+="</select>";
-		content+="</div>";
-		content+="</li>";
+		var content = "";		
 		var dataArrayLength =  data.length;
-		for (var i = 1; i < dataArrayLength; i++) {	
+		for (var i = 1; i < dataArrayLength; i++) {		    
 			var counter = i + 1;
 			content+="<li id='li_"+counter+"'>";
 			content+="<label for='element_"+counter+"' class='description'>Memeber Name & role-"+i+" </label>";
 			content+="<div>";
 			content+="<input id='element_"+counter+"' name='element_"+counter+"' type='text' maxlength='255' value='"+data[i].member+"' class='element text medium'/>";
 			content+="</div>";
-			content+="<p id='guide_"+counter+"' class='guidelines'><small>Name of the member</small></p>";
+			content+="<p id='guide_"+counter+"' class='guidelines'><small>Memeber's name and role in the company</small></p>";
 			content+="<input id='element_"+counter+"' name='element_"+counter+"' type='text' maxlength='255' value='"+data[i].position+"' class='element text medium'/>";
-			content+="</li>";	        
-		}			          
-		$('#team-members-form').prepend(content);
-	});	
+			content+="</li>";			
+		}
+		$('#li_1').after(content);		
+	});
+	
+	
 }
-
 
 function modifySection4Form(event){
 	event.preventDefault();
 	var numberOfTeamMembers = $('#numberOfTeamMembers').val();
-	$('#team-members-form li:not(:first)').remove();
+	$('#team-members-form li:not(:first):not(:last)').remove();
 	var content = "";
 	for (var i = 1; i <= numberOfTeamMembers; i++) {	
 			var counter = i + 1;
@@ -114,27 +105,27 @@ function modifySection4Form(event){
 			content+="<input id='element_"+counter+"' class='role' name='element_"+counter+"' type='text' maxlength='255' value='' class='element text medium'/>";
 			content+="</li>";	        
 	}
-	$('#team-members-form').append(content);	
+	$('#li_1').after(content);	
 }
 
 function updateSection4Content(event){
 	event.preventDefault();
 	var members = new Array();
-	$('#team-members-form li:not(:first)').each(function( index ) {
+	$('#team-members-form li:not(:first):not(:last)').each(function( index ) {
 	   var name = $( this ).find('input.name').val();
 	   var role = $( this ).find('input.role').val();	    	   
 	   members.push([name,role]);
-	});	
+	});		
 	var membersJSON = new Array();
 	for (var i in members) {
 	  var name = members[i][0];
-	  var position = members[i][1];
-	  var json = {"member": name,"position":position}
-	  membersJSON.push(json);	  
-	}	
-	$.ajax({type: 'PUT',data: JSON.stringify({ content: membersJSON }),url: '/cms/set/section4',dataType: 'JSON'}).done(function( response ){
+	  var position = members[i][1];	  
+	  membersJSON.push(JSON.stringify({"member": name,"position":position}));
+	}
+	membersJSONString = ("["+membersJSON.join(",")+"]");	
+	$.ajax({type: 'PUT',data: {content: membersJSONString},url: '/cms/set/section4',dataType: 'JSON'}).done(function( response ){
 		if (response.msg === ''){ 
-			//populateSection4();
+			populateSection4();
 			alert("scuccessfully updated !!");
 		}
 		else { alert('Error: ' + response.msg); }

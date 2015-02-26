@@ -8,7 +8,6 @@ $( document ).ready(function() {
 });
 
 function populateContentSlider(){
-
 	var getUrl = '/cms/get/section1';
 	var content = "First Slide Testing";
 
@@ -85,8 +84,7 @@ function populateContentSection4 () {
 			teamMember+="</div></div>";			
 			teamMembers +=teamMember;
 
-		}		
-
+		}
 		var section4Content = sectionTitle + teamMembers;
 		$('#section-4').html(section4Content);
 	});

@@ -1,6 +1,7 @@
 var express = require('express');
 var cms = express.Router();
 var multer  = require('multer');
+var str2json = require('string-to-json');
 var done = false;
 
 cms.use(multer({ 
@@ -83,12 +84,10 @@ cms.get('/set/section3/default',function(req,res){
 });
 
 cms.put('/set/section4',function(req,res){
-	var db = req.db;
-	//var content = [{"member":"Shiva","position":"Manager"},{"member":"Aynka","position":"Employee"}];	
-	var content = req.body;	
-	console.log(content);
-	res.send({ msg: '' });	
-	db.collection('section4').insert(content,function(err,result) {
+	var db = req.db;	
+	var content = (str2json.convert(req.body)).content;
+	db.collection('section4').drop();		
+	db.collection('section4').insert(value,function(err,result) {
 		res.send((result === 1) ? { msg: '' } : { msg: 'error:' + err });
 	});	
 });

@@ -17,6 +17,7 @@
     "mongoskin": "*",
     "multer": "~0.1.6",
     "keystone": "latest",
-    "underscore": "latest"
+    "underscore": "latest",
+    "string-to-json": "latest"
   }
 }
