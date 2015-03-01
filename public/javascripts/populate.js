@@ -58,7 +58,6 @@ function populateContentSection3() {
 }
 
 function populateContentSection4 () {
-
 	var getUrl = '/cms/get/section4';
 	var content;
 	$.getJSON(getUrl, function (data){
@@ -75,7 +74,7 @@ function populateContentSection4 () {
 
 		var teamMembers="";
 		var dataArrayLength =  data.length;
-		for (var i = 1; i < dataArrayLength; i++) {
+		for (var i = 0; i < dataArrayLength; i++) {
 	    	
 	    	var teamMember="<div class='col1-3'>";
 			teamMember+="<div class='info_panel'>";

@@ -14,7 +14,40 @@ $( document ).ready(function() {
 	$('#saveFormContactUs').on('click', updateContactUsContent);
 	$('#saveFormFooter').on('click', updateFooter);
 	
+
+	$('#modifyFormTesimonials').on('click', modifyTestimonialForm);
+	$('#modifyFormSection3Services').on('click', modifySection3ServiceForm);
+
 });
+
+function modifySection3ServiceForm(event){
+	event.preventDefault();
+}
+
+function modifyTestimonialForm(event){
+	event.preventDefault();
+	var numberOfTestimonials = $('#numberOfTestimonials').val();	
+	$('#testimonials li:not(:first):not(:nth-last-child(2)):not(:last)').remove();
+	var content="";
+	for (var i = 1; i <= numberOfTestimonials; i++) {	
+			var counter = i + 1;
+			content+="<li id='li_"+counter+"'>";
+			content+="<label for='element_"+counter+"' class='description'>Name of the Testimonial-"+i+" </label>";
+			content+="<div>";
+			content+="<input id='element_"+counter+"' class='name' name='element_"+counter+"' type='text' maxlength='255' value='' class='element text medium'/>";
+			content+="</div>";
+			content+="<p id='guide_"+counter+"' class='guidelines'><small>Add the name of the testimonial</small></p>";
+			content+="<label for='element_"+counter+"' class='description'>Testimonial-"+i+" </label>";
+			content+="<div>";
+			content+="<textarea id='element_"+counter+"' class='testimonial' name='element_"+counter+"' type='text' maxlength='255' value='' class='element textarea medium'/>";
+			content+="</div>";
+			content+="<p id='guide_"+counter+"' class='guidelines'><small>Keep it to 3 to 4 lines at maximum.</small></p>";
+			content+="</li>";	        
+	}	
+	$('#testimonials li:first').after(content);
+}
+
+
 
 function populateSection1(){
 	
@@ -72,8 +105,8 @@ function populateSection4(){
 	$.getJSON(getUrl, function (data){
 		var content = "";		
 		var dataArrayLength =  data.length;
-		for (var i = 1; i < dataArrayLength; i++) {		    
-			var counter = i + 1;
+		for (var i = 0; i < dataArrayLength; i++) {		    
+			var counter = i + 2;
 			content+="<li id='li_"+counter+"'>";
 			content+="<label for='element_"+counter+"' class='description'>Memeber Name & role-"+i+" </label>";
 			content+="<div>";
@@ -83,7 +116,7 @@ function populateSection4(){
 			content+="<input id='element_"+counter+"' name='element_"+counter+"' type='text' maxlength='255' value='"+data[i].position+"' class='element text medium'/>";
 			content+="</li>";			
 		}
-		$('#li_1').after(content);		
+		$('.dropDown').after(content);		
 	});
 	
 	
@@ -105,7 +138,7 @@ function modifySection4Form(event){
 			content+="<input id='element_"+counter+"' class='role' name='element_"+counter+"' type='text' maxlength='255' value='' class='element text medium'/>";
 			content+="</li>";	        
 	}
-	$('#li_1').after(content);	
+	$('.dropDown').after(content);
 }
 
 function updateSection4Content(event){
@@ -120,10 +153,11 @@ function updateSection4Content(event){
 	for (var i in members) {
 	  var name = members[i][0];
 	  var position = members[i][1];	  
-	  membersJSON.push(JSON.stringify({"member": name,"position":position}));
+	  membersJSON.push({"member": name,"position":position});
 	}
-	membersJSONString = ("["+membersJSON.join(",")+"]");	
-	$.ajax({type: 'PUT',data: {content: membersJSONString},url: '/cms/set/section4',dataType: 'JSON'}).done(function( response ){
+	var content = JSON.parse(JSON.stringify(membersJSON));
+	console.log(content);
+	$.ajax({type: 'PUT',data: {info:content},url: '/cms/set/section4',dataType: 'JSON'}).done(function( response ){
 		if (response.msg === ''){ 
 			populateSection4();
 			alert("scuccessfully updated !!");

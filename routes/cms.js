@@ -2,6 +2,7 @@ var express = require('express');
 var cms = express.Router();
 var multer  = require('multer');
 var str2json = require('string-to-json');
+var util = require('util');
 var done = false;
 
 cms.use(multer({ 
@@ -18,14 +19,12 @@ cms.use(multer({
 	}
 }));
 
-
 cms.post('/upload/photo',function(req,res){
   if(done==true){
     console.log(req.files);
     res.end("File uploaded.");
   }
-})
-
+});
 
 cms.get('/get/section1',function(req,res) {
 	var db = req.db;
@@ -85,9 +84,9 @@ cms.get('/set/section3/default',function(req,res){
 
 cms.put('/set/section4',function(req,res){
 	var db = req.db;	
-	var content = (str2json.convert(req.body)).content;
+	var content = req.body;	
 	db.collection('section4').drop();		
-	db.collection('section4').insert(value,function(err,result) {
+	db.collection('section4').insert(content.info,function(err,result) {
 		res.send((result === 1) ? { msg: '' } : { msg: 'error:' + err });
 	});	
 });
