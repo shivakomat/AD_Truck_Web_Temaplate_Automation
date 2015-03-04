@@ -10,8 +10,8 @@ $( document ).ready(function() {
 	$('#saveFormSection3').on('click', updateSection3Content);
 
 	$('#saveFormSection4').on('click', updateSection4Content);
-	$('#modifyFormSection4').on('click', modifySection4Form);
-	$('#clearFormSection4').on('click', clearSection4Form);
+	$('#addFormSection4').on('click', modifySection4Form);
+	$('#resetFormSection4').on('click', resetSection4Form);
 
 	$('#saveFormSection6').on('click', updateSection6Content);	
 	$('#saveFormContactUs').on('click', updateContactUsContent);
@@ -114,17 +114,17 @@ function populateSection4(){
 			content+="<li id='li_"+counter+"'>";
 			content+="<label for='element_"+counter+"' class='description'>Memeber Name & role-"+teamNumber+" </label>";
 			content+="<div>";
-			content+="<input id='element_"+counter+"' name='element_"+counter+"' type='text' maxlength='255'"+"value='"+name+"'"+"class='element text medium'/>";
+			content+="<input id='name' name='element_"+counter+"' type='text' maxlength='255'"+"value='"+name+"'"+"class='element text medium'/>";
 			content+="</div>";
 			content+="<p id='guide_"+counter+"' class='guidelines'><small>Memeber's name and role in the company</small></p>";
-			content+="<input id='element_"+counter+"' name='element_"+counter+"' type='text' maxlength='255'"+"value='"+position+"'"+"class='element text medium'/>";
+			content+="<input id='role' name='element_"+counter+"' type='text' maxlength='255'"+"value='"+position+"'"+"class='element text medium'/>";
 			content+="</li>";			
 		}
 		$('.dropDown').after(content);		
 	});	
 }
 
-function clearSection4Form(event){
+function resetSection4Form(event){
 	event.preventDefault();
 	populateSection4();
 	$('#team-members-form li:first select').each(function() { this.selectedIndex = 0 });
@@ -139,15 +139,15 @@ function modifySection4Form(event){
 	var totalTeamMembers = currentNumberOfTeamMembers + numberOfTeamMembers;	
 	if(totalTeamMembers <= 8){	
 		for (var i = 1; i <= numberOfTeamMembers; i++) {	
-			var counter = i + 1;
-			var teamNumber = currentNumberOfTeamMembers + i;			
+			var teamNumber = currentNumberOfTeamMembers + i;
+			var counter = teamNumber + 1;			
 			content+="<li id='li_"+counter+"'>";
 			content+="<label for='element_"+counter+"' class='description'>Memeber Name & role-"+teamNumber+" </label>";
 			content+="<div>";
-			content+="<input id='element_"+counter+"' class='name' name='element_"+counter+"' type='text' maxlength='255' value='' class='element text medium'/>";
+			content+="<input id='name' name='element_"+counter+"' type='text' maxlength='255' value='' class='element text medium'/>";
 			content+="</div>";
-			content+="<p id='guide_"+counter+"' class='guidelines'><small>Name of the member</small></p>";
-			content+="<input id='element_"+counter+"' class='role' name='element_"+counter+"' type='text' maxlength='255' value='' class='element text medium'/>";
+			content+="<p id='guide_"+counter+"' class='guidelines'><small>Memeber's name and role in the company</small></p>";
+			content+="<input id='role' name='element_"+counter+"' type='text' maxlength='255' value='' class='element text medium'/>";
 			content+="</li>";	        
 		}	
 		$('#team-members-form li:last').before(content);
@@ -161,8 +161,8 @@ function updateSection4Content(event){
 	event.preventDefault();
 	var members = new Array();
 	$('#team-members-form li:not(:first):not(:last)').each(function( index ) {
-	   var name = $(this).find('input.name').val();
-	   var role = $(this).find('input.role').val();	    	   
+	   var name = $(this).find('#name').val();
+	   var role = $(this).find('#role').val();	    	   
 	   members.push([name,role]);
 	   console.log("["+name+","+role+"]");
 	});		
@@ -174,7 +174,7 @@ function updateSection4Content(event){
 	}
 	var content = JSON.parse(JSON.stringify(membersJSON));	
 	$.ajax({type: 'PUT',data: {info:content},url: '/cms/set/section4',dataType: 'JSON'}).done(function( response ){
-		if (response.msg === ''){ populateSection4(); alert("scuccessfully updated !!"); }
+		if (response.msg === ''){ resetSection4Form(); alert("scuccessfully updated !!"); }
 		else { alert('Error: ' + response.msg); }
 	});		
 }

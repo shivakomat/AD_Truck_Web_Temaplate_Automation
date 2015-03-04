@@ -85,9 +85,11 @@ cms.get('/set/section3/default',function(req,res){
 cms.put('/set/section4',function(req,res){
 	var db = req.db;	
 	var content = req.body;	
-	db.collection('section4').drop();		
-	db.collection('section4').insert(content.info,function(err,result) {
-		res.send((result === 1) ? { msg: '' } : { msg: 'error:' + err });
+	db.collection('section4').drop(function(err,result){
+		db.collection('section4').insert(content.info,function(err,result) {
+			console.log("result: "+result);
+			res.send((result === 1) ? { msg: '' } : { msg: 'error:' + err });
+		});	
 	});	
 });
 
