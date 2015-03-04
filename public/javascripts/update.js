@@ -8,9 +8,12 @@ $( document ).ready(function() {
 
 	$('#saveFormSection1').on('click', updateSection1Content);		
 	$('#saveFormSection3').on('click', updateSection3Content);
+
 	$('#saveFormSection4').on('click', updateSection4Content);
-	$('#modifyFormSection4').on('click', modifySection4Form);		
-	$('#saveFormSection6').on('click', updateSection6Content);
+	$('#modifyFormSection4').on('click', modifySection4Form);
+	$('#clearFormSection4').on('click', clearSection4Form);
+
+	$('#saveFormSection6').on('click', updateSection6Content);	
 	$('#saveFormContactUs').on('click', updateContactUsContent);
 	$('#saveFormFooter').on('click', updateFooter);
 	
@@ -46,8 +49,6 @@ function modifyTestimonialForm(event){
 	}	
 	$('#testimonials li:first').after(content);
 }
-
-
 
 function populateSection1(){
 	
@@ -107,47 +108,63 @@ function populateSection4(){
 		var dataArrayLength =  data.length;
 		for (var i = 0; i < dataArrayLength; i++) {		    
 			var counter = i + 2;
+			var teamNumber = i +1;
+			var name = data[i].member;			
+			var position = data[i].position;			
 			content+="<li id='li_"+counter+"'>";
-			content+="<label for='element_"+counter+"' class='description'>Memeber Name & role-"+i+" </label>";
+			content+="<label for='element_"+counter+"' class='description'>Memeber Name & role-"+teamNumber+" </label>";
 			content+="<div>";
-			content+="<input id='element_"+counter+"' name='element_"+counter+"' type='text' maxlength='255' value='"+data[i].member+"' class='element text medium'/>";
+			content+="<input id='element_"+counter+"' name='element_"+counter+"' type='text' maxlength='255'"+"value='"+name+"'"+"class='element text medium'/>";
 			content+="</div>";
 			content+="<p id='guide_"+counter+"' class='guidelines'><small>Memeber's name and role in the company</small></p>";
-			content+="<input id='element_"+counter+"' name='element_"+counter+"' type='text' maxlength='255' value='"+data[i].position+"' class='element text medium'/>";
+			content+="<input id='element_"+counter+"' name='element_"+counter+"' type='text' maxlength='255'"+"value='"+position+"'"+"class='element text medium'/>";
 			content+="</li>";			
 		}
 		$('.dropDown').after(content);		
-	});
-	
-	
+	});	
 }
+
+function clearSection4Form(event){
+	event.preventDefault();
+	populateSection4();
+	$('#team-members-form li:first select').each(function() { this.selectedIndex = 0 });
+}
+
 
 function modifySection4Form(event){
 	event.preventDefault();
-	var numberOfTeamMembers = $('#numberOfTeamMembers').val();
-	$('#team-members-form li:not(:first):not(:last)').remove();
+	var currentNumberOfTeamMembers = $('#team-members-form > li:not(:first):not(:last)').length;
+	var numberOfTeamMembers = parseInt($('#numberOfTeamMembers').val(),10);
 	var content = "";
-	for (var i = 1; i <= numberOfTeamMembers; i++) {	
+	var totalTeamMembers = currentNumberOfTeamMembers + numberOfTeamMembers;	
+	if(totalTeamMembers <= 8){	
+		for (var i = 1; i <= numberOfTeamMembers; i++) {	
 			var counter = i + 1;
+			var teamNumber = currentNumberOfTeamMembers + i;			
 			content+="<li id='li_"+counter+"'>";
-			content+="<label for='element_"+counter+"' class='description'>Memeber Name & role-"+i+" </label>";
+			content+="<label for='element_"+counter+"' class='description'>Memeber Name & role-"+teamNumber+" </label>";
 			content+="<div>";
 			content+="<input id='element_"+counter+"' class='name' name='element_"+counter+"' type='text' maxlength='255' value='' class='element text medium'/>";
 			content+="</div>";
 			content+="<p id='guide_"+counter+"' class='guidelines'><small>Name of the member</small></p>";
 			content+="<input id='element_"+counter+"' class='role' name='element_"+counter+"' type='text' maxlength='255' value='' class='element text medium'/>";
 			content+="</li>";	        
+		}	
+		$('#team-members-form li:last').before(content);
 	}
-	$('.dropDown').after(content);
+	else{
+		alert("Error: The total number of members exceeded !!");
+	}	
 }
 
 function updateSection4Content(event){
 	event.preventDefault();
 	var members = new Array();
 	$('#team-members-form li:not(:first):not(:last)').each(function( index ) {
-	   var name = $( this ).find('input.name').val();
-	   var role = $( this ).find('input.role').val();	    	   
+	   var name = $(this).find('input.name').val();
+	   var role = $(this).find('input.role').val();	    	   
 	   members.push([name,role]);
+	   console.log("["+name+","+role+"]");
 	});		
 	var membersJSON = new Array();
 	for (var i in members) {
@@ -155,13 +172,9 @@ function updateSection4Content(event){
 	  var position = members[i][1];	  
 	  membersJSON.push({"member": name,"position":position});
 	}
-	var content = JSON.parse(JSON.stringify(membersJSON));
-	console.log(content);
+	var content = JSON.parse(JSON.stringify(membersJSON));	
 	$.ajax({type: 'PUT',data: {info:content},url: '/cms/set/section4',dataType: 'JSON'}).done(function( response ){
-		if (response.msg === ''){ 
-			populateSection4();
-			alert("scuccessfully updated !!");
-		}
+		if (response.msg === ''){ populateSection4(); alert("scuccessfully updated !!"); }
 		else { alert('Error: ' + response.msg); }
 	});		
 }
@@ -251,7 +264,6 @@ function updateFooter (event) {
 		company_name: $('#company-name').val(),
 		trademark:trademarkFeatureStatus				
 	}
-
 	$.ajax({type: 'PUT',data: content,url: '/cms/set/footer',dataType: 'JSON'}).done(function( response ){
 			if (response.msg === ''){ 
 				populateFooter();
