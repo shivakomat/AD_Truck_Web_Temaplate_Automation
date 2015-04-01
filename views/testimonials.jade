@@ -15,7 +15,7 @@ html(xmlns='http://www.w3.org/1999/xhtml')
           h2 Edit -Testimonials Section
           p Add/Remove Testimonials
         ul#testimonials
-          li#li_3
+          li#li_1
             label.description(for='element_3') Number of Testimonials 
             div
               select#numberOfTestimonials.element.select.medium(name='element_3')
@@ -26,19 +26,7 @@ html(xmlns='http://www.w3.org/1999/xhtml')
                 option(value='4') 4
                 option(value='5') 5
             p#guide_3.guidelines
-              small Choose the number of testimonials
-          li#li_1
-            label.description(for='element_1') Name of the Testimonial 
-            div
-              input#element_1.element.text.medium(name='element_1', type='text', maxlength='255', value='')
-            p#guide_1.guidelines
-              small Add the name of the testimonial
-          li#li_2
-            label.description(for='element_2') Testimonial 
-            div
-              textarea#element_2.element.textarea.medium(name='element_2')
-            p#guide_2.guidelines
-              small Keep it to 3 to 4 lines at maximum.
+              small Choose the number of testimonials          
           li#li_4
             label.description(for='element_4') Enable/Disable - Testimonial Section 
             span
@@ -50,8 +38,9 @@ html(xmlns='http://www.w3.org/1999/xhtml')
                 | To Disable : check the check box
           li.buttons
             input(type='hidden', name='form_id', value='977891')
+            input#clearFormTestimonials.button_text(type='button', name='clear', value='Clear')
             input#modifyFormTesimonials.button_text(type='button', name='modify', value='Modify')
-            input#saveForm.button_text(type='submit', name='submit', value='Submit')
+            input#saveFormTestimonials.button_text(type='submit', name='submit', value='Submit')
       #footer
         | Powered by 
         a(href='http://ankitdesigns.com') Ankit Designs

@@ -5,13 +5,14 @@ $( document ).ready(function() {
 	populateSection6();
 	populateFooter();
 	populateContactUs();
+	populateTestimonials();
 
 	$('#saveFormSection1').on('click', updateSection1Content);		
 	$('#saveFormSection3').on('click', updateSection3Content);
 
 	$('#saveFormSection4').on('click', updateSection4Content);
-	$('#addFormSection4').on('click', modifySection4Form);
-	$('#resetFormSection4').on('click', resetSection4Form);
+	$('#modifyFormSection4').on('click', modifySection4Form);
+	$('#clearFormSection4').on('click', clearSection4Form);
 
 	$('#saveFormSection6').on('click', updateSection6Content);	
 	$('#saveFormContactUs').on('click', updateContactUsContent);
@@ -19,35 +20,29 @@ $( document ).ready(function() {
 	
 
 	$('#modifyFormTesimonials').on('click', modifyTestimonialForm);
+	$('#saveFormTestimonials').on('click', updateTestimonials);	
+	$('#clearFormTestimonials').on('click', clearTestimonials);
+
 	$('#modifyFormSection3Services').on('click', modifySection3ServiceForm);
+	populateImages();
 
 });
 
-function modifySection3ServiceForm(event){
-	event.preventDefault();
+function populateImages(){
+	var getUrl = '/util/get/images';
+	$.getJSON(getUrl, function (data){
+		var filenames = new Array();
+		for (var i = 0; i < data.length; i++) { filenames.push(data[i]);  }
+		var imageFileNames = filenames.join("").split(",");
+		for (var i = 0; i < imageFileNames.length; i++) { 
+			console.log(imageFileNames[i]+"\n");  
+		}
+	});
 }
 
-function modifyTestimonialForm(event){
+
+function modifySection3ServiceForm(event){
 	event.preventDefault();
-	var numberOfTestimonials = $('#numberOfTestimonials').val();	
-	$('#testimonials li:not(:first):not(:nth-last-child(2)):not(:last)').remove();
-	var content="";
-	for (var i = 1; i <= numberOfTestimonials; i++) {	
-			var counter = i + 1;
-			content+="<li id='li_"+counter+"'>";
-			content+="<label for='element_"+counter+"' class='description'>Name of the Testimonial-"+i+" </label>";
-			content+="<div>";
-			content+="<input id='element_"+counter+"' class='name' name='element_"+counter+"' type='text' maxlength='255' value='' class='element text medium'/>";
-			content+="</div>";
-			content+="<p id='guide_"+counter+"' class='guidelines'><small>Add the name of the testimonial</small></p>";
-			content+="<label for='element_"+counter+"' class='description'>Testimonial-"+i+" </label>";
-			content+="<div>";
-			content+="<textarea id='element_"+counter+"' class='testimonial' name='element_"+counter+"' type='text' maxlength='255' value='' class='element textarea medium'/>";
-			content+="</div>";
-			content+="<p id='guide_"+counter+"' class='guidelines'><small>Keep it to 3 to 4 lines at maximum.</small></p>";
-			content+="</li>";	        
-	}	
-	$('#testimonials li:first').after(content);
 }
 
 function populateSection1(){
@@ -114,22 +109,21 @@ function populateSection4(){
 			content+="<li id='li_"+counter+"'>";
 			content+="<label for='element_"+counter+"' class='description'>Memeber Name & role-"+teamNumber+" </label>";
 			content+="<div>";
-			content+="<input id='name' name='element_"+counter+"' type='text' maxlength='255'"+"value='"+name+"'"+"class='element text medium'/>";
+			content+="<input id='element_"+counter+"' name='element_"+counter+"' type='text' maxlength='255'"+"value='"+name+"'"+"class='element text medium'/>";
 			content+="</div>";
 			content+="<p id='guide_"+counter+"' class='guidelines'><small>Memeber's name and role in the company</small></p>";
-			content+="<input id='role' name='element_"+counter+"' type='text' maxlength='255'"+"value='"+position+"'"+"class='element text medium'/>";
+			content+="<input id='element_"+counter+"' name='element_"+counter+"' type='text' maxlength='255'"+"value='"+position+"'"+"class='element text medium'/>";
 			content+="</li>";			
 		}
 		$('.dropDown').after(content);		
 	});	
 }
 
-function resetSection4Form(event){
+function clearSection4Form(event){
 	event.preventDefault();
 	populateSection4();
 	$('#team-members-form li:first select').each(function() { this.selectedIndex = 0 });
 }
-
 
 function modifySection4Form(event){
 	event.preventDefault();
@@ -139,15 +133,15 @@ function modifySection4Form(event){
 	var totalTeamMembers = currentNumberOfTeamMembers + numberOfTeamMembers;	
 	if(totalTeamMembers <= 8){	
 		for (var i = 1; i <= numberOfTeamMembers; i++) {	
-			var teamNumber = currentNumberOfTeamMembers + i;
-			var counter = teamNumber + 1;			
+			var counter = i + 1;
+			var teamNumber = currentNumberOfTeamMembers + i;			
 			content+="<li id='li_"+counter+"'>";
 			content+="<label for='element_"+counter+"' class='description'>Memeber Name & role-"+teamNumber+" </label>";
 			content+="<div>";
-			content+="<input id='name' name='element_"+counter+"' type='text' maxlength='255' value='' class='element text medium'/>";
+			content+="<input id='element_"+counter+"' class='name' name='element_"+counter+"' type='text' maxlength='255' value='' class='element text medium'/>";
 			content+="</div>";
-			content+="<p id='guide_"+counter+"' class='guidelines'><small>Memeber's name and role in the company</small></p>";
-			content+="<input id='role' name='element_"+counter+"' type='text' maxlength='255' value='' class='element text medium'/>";
+			content+="<p id='guide_"+counter+"' class='guidelines'><small>Name of the member</small></p>";
+			content+="<input id='element_"+counter+"' class='role' name='element_"+counter+"' type='text' maxlength='255' value='' class='element text medium'/>";
 			content+="</li>";	        
 		}	
 		$('#team-members-form li:last').before(content);
@@ -161,8 +155,8 @@ function updateSection4Content(event){
 	event.preventDefault();
 	var members = new Array();
 	$('#team-members-form li:not(:first):not(:last)').each(function( index ) {
-	   var name = $(this).find('#name').val();
-	   var role = $(this).find('#role').val();	    	   
+	   var name = $(this).find('input.name').val();
+	   var role = $(this).find('input.role').val();	    	   
 	   members.push([name,role]);
 	   console.log("["+name+","+role+"]");
 	});		
@@ -174,11 +168,104 @@ function updateSection4Content(event){
 	}
 	var content = JSON.parse(JSON.stringify(membersJSON));	
 	$.ajax({type: 'PUT',data: {info:content},url: '/cms/set/section4',dataType: 'JSON'}).done(function( response ){
-		if (response.msg === ''){ resetSection4Form(); alert("scuccessfully updated !!"); }
+		if (response.msg === ''){ populateSection4(); alert("scuccessfully updated !!"); }
 		else { alert('Error: ' + response.msg); }
 	});		
 }
 
+function populateTestimonials(){	
+	var getUrl = '/cms/get/testimonials';
+	$('#testimonials li:not(:first):not(:nth-last-child(2)):not(:last)').remove();		
+	$.getJSON(getUrl, function (data){
+		var content = "";		
+		var dataArrayLength =  data.length;
+		console.log("Number of testimonials: "+dataArrayLength);
+		for (var i = 0; i < dataArrayLength; i++) {		    
+			var counter = i + 2;		
+			var testimonialNumber = i +1;
+			var name = data[i].name;			
+			var testimonial = data[i].testimonial;
+			console.log("testimonial: "+testimonial);
+			content+="<li id='li_"+counter+"'>";
+			content+="<label for='element_"+counter+"' class='description'>Name of the Testimonial-"+testimonialNumber+" </label>";
+			content+="<div>";
+			content+="<input id='element_"+counter+"' class='name' name='element_"+counter+"' type='text' maxlength='255' value='"+name+"' class='element text medium'/>";
+			content+="</div>";
+			content+="<p id='guide_"+counter+"' class='guidelines'><small>Add the name of the testimonial</small></p>";
+			content+="<label for='element_"+counter+"' class='description'>Testimonial </label>";
+			content+="<div>";
+			content+="<textarea id='element_"+counter+"' class='testimonial' name='element_"+counter+"' type='text' maxlength='255' value='' class='element textarea medium'>"+testimonial+"</textarea>";
+			content+="</div>";
+			content+="<p id='guide_"+counter+"' class='guidelines'><small>Keep it to 3 to 4 lines at maximum.</small></p>";
+			content+="</li>";				        		
+		}
+		$('#testimonials li:first').after(content);
+		$('#testimonials li:first select').each(function() { this.selectedIndex = 0 });	
+	});	
+}
+
+function clearTestimonials(event){
+	event.preventDefault();
+	populateTestimonials();	
+}
+
+
+function updateTestimonials(event){
+	event.preventDefault();
+	var testimonials = new Array();
+	$('#testimonials li:not(:first):not(:nth-last-child(2)):not(:last)').each(function( index ) {
+		var name = $(this).find('input.name').val();
+		var testimonial = $(this).find('textarea.testimonial').val();
+		testimonials.push([name,testimonial]);
+		console.log("["+name+","+testimonial+"]");
+	});
+	var testimonialsJSON = new Array();
+	for (var i in testimonials) {
+		var name = testimonials[i][0];
+		var testimonial = testimonials[i][1];
+		testimonialsJSON.push({"name":name,"testimonial":testimonial});
+	}
+	var content = JSON.parse(JSON.stringify(testimonialsJSON));
+	$.ajax({type: 'PUT',data: {info:content},url: '/cms/set/testimonials',dataType: 'JSON'}).done(function( response ){
+		if (response.msg === ''){
+			populateTestimonials();
+			alert("scuccessfully updated !!"); 
+		}
+		else { alert('Error: ' + response.msg); }
+	});
+}
+
+function modifyTestimonialForm(event){
+	event.preventDefault();
+	var currentNumberOfTestimonials = $('#testimonials > li:not(:first):not(:nth-last-child(2)):not(:last)').length;
+	console.log('currentNumberOfTestimonials: '+currentNumberOfTestimonials);	
+	var numberOfTestimonials = parseInt($('#numberOfTestimonials').val(),10);
+	var totalTestimonials = currentNumberOfTestimonials + numberOfTestimonials;		
+	if(totalTestimonials <= 5){
+		var content="";
+		for (var i = 1; i <= numberOfTestimonials; i++) {	
+				var counter = i + 1;
+				var testimonialNumber = currentNumberOfTestimonials + i;
+				content+="<li id='li_"+counter+"'>";
+				content+="<label for='element_"+counter+"' class='description'>Name of the Testimonial- "+testimonialNumber+" </label>";
+				content+="<div>";
+				content+="<input id='element_"+counter+"' class='name' name='element_"+counter+"' type='text' maxlength='255' value='' class='element text medium'/>";
+				content+="</div>";
+				content+="<p id='guide_"+counter+"' class='guidelines'><small>Add the name of the testimonial</small></p>";
+				content+="<label for='element_"+counter+"' class='description'>Testimonial </label>";
+				content+="<div>";
+				content+="<textarea id='element_"+counter+"' class='testimonial' name='element_"+counter+"' type='text' maxlength='255' value='' class='element textarea medium'/>";
+				content+="</div>";
+				content+="<p id='guide_"+counter+"' class='guidelines'><small>Keep it to 3 to 4 lines at maximum.</small></p>";
+				content+="</li>";	        
+		}	
+		$('#testimonials li:nth-last-child(2)').before(content);
+		$('#testimonials li:first select').each(function() { this.selectedIndex = 0 });
+	}
+	else {
+		alert("Error: The total number of testimonials exceeded !!");
+	}
+}
 
 function populateSection6(){
 	var getUrl = '/cms/get/section6';

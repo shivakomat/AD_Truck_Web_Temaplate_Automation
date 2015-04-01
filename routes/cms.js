@@ -1,7 +1,6 @@
 var express = require('express');
 var cms = express.Router();
 var multer  = require('multer');
-var str2json = require('string-to-json');
 var util = require('util');
 var done = false;
 
@@ -47,6 +46,14 @@ cms.get('/get/section4',function(req,res) {
 	});
 });
 
+cms.get('/get/testimonials',function(req,res) {
+	var db = req.db;
+	db.collection('testimonials').find().toArray(function (err,content){
+		res.json(content);
+	});
+});
+
+
 cms.get('/get/section6',function(req,res) {
 	var db = req.db;
 	db.collection('section6').find().toArray(function (err,content){
@@ -82,14 +89,21 @@ cms.get('/set/section3/default',function(req,res){
 	});	
 });
 
+cms.put('/set/testimonials',function(req,res){
+	var db = req.db;	
+	var content = req.body;	
+	db.collection('testimonials').drop();		
+	db.collection('testimonials').insert(content.info,function(err,result) {
+		res.send((result === 1) ? { msg: '' } : { msg: 'error:' + err });
+	});	
+});
+
 cms.put('/set/section4',function(req,res){
 	var db = req.db;	
 	var content = req.body;	
-	db.collection('section4').drop(function(err,result){
-		db.collection('section4').insert(content.info,function(err,result) {
-			console.log("result: "+result);
-			res.send((result === 1) ? { msg: '' } : { msg: 'error:' + err });
-		});	
+	db.collection('section4').drop();		
+	db.collection('section4').insert(content.info,function(err,result) {
+		res.send((result === 1) ? { msg: '' } : { msg: 'error:' + err });
 	});	
 });
 

@@ -5,6 +5,7 @@ $( document ).ready(function() {
 	populateContentSection6();
 	populateContactUsSection();
 	populateFooterSection();
+	populateTestimonials();
 });
 
 function populateContentSlider(){
@@ -89,6 +90,26 @@ function populateContentSection4 () {
 	});
 }
 
+function populateTestimonials() {
+	var getUrl = '/cms/get/testimonials';		
+	$.getJSON(getUrl, function (data){		
+		var dataArrayLength =  data.length;
+		var testimonials="<div class='flex-viewport' style='overflow: hidden; position: relative;'>";
+		testimonials+="<div class='flexslider clearfix'>";
+		console.log('NumberOfTestimonials: '+dataArrayLength);
+		for (var i = 0; i < dataArrayLength; i++){			
+			testimonials+="<blockquote class='quote_slide'>";
+			testimonials+="<p>My expectations were surpassed. We are so glad we booked Tim for our new project.</p>";
+            testimonials+="<p><a href='#'>Shiva Inc.</a></p>";
+            testimonials+="</blockquote>";
+		}
+		testimonials+="</div>";
+		testimonials+="</div>";
+		console.log(testimonials);
+		//$('#quotes_slider_container').html(testimonials);
+	});
+}
+
 function populateContentSection6() {
 	var getUrl = '/cms/get/section6';
 	$.getJSON(getUrl, function (data){
@@ -125,8 +146,6 @@ function populateContactUsSection(){
 function populateFooterSection(){
 	var getUrl = '/cms/get/footer';
 	$.getJSON(getUrl, function (data){
-		// console.log(data[0].company_name);
-		// console.log(data[0].trademark);
 		var currentYear = (new Date()).getFullYear();	
 		var content="<p>";
 		content+="<span id='copyright-section' class='alignleft small'>";

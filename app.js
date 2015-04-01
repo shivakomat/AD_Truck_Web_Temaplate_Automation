@@ -12,6 +12,7 @@ var db = mongo.db('mongodb://localhost:27017/site_data',{native_parser:true});
 
 var routes = require('./routes/index');
 var cms = require('./routes/cms');
+var util = require('./routes/util');
 
 
 
@@ -33,6 +34,7 @@ app.use(function(req,res,next){
 });
 app.use('/', routes);
 app.use('/cms', cms);
+app.use('/util',util);
 
 
 /// catch 404 and forward to error handler
